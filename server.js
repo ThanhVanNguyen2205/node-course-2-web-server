@@ -1,6 +1,7 @@
 const hbs = require('hbs');
 const express= require('express');
 const fs=require('fs');
+const port=process.env.PORT ||3000;
 
 let app=express();
 
@@ -18,13 +19,13 @@ app.use((req,res,next)=>{
    let timeStamp=new Date().toString();
    let log=`${timeStamp}: ${req.method} ${req.url}`;
    console.log(log);
-   fs.writeFileSync("server log",log+'\n');
+   fs.writeFileSync("server.log",log+'\n');
    next();
 })
 //maintanace page
-app.use((req,res,next)=>{
-    res.render('maintanance.hbs');
-});
+// app.use((req,res,next)=>{
+//     res.render('maintanance.hbs');
+// });
 app.use(express.static(__dirname+'/public'));
 
 app.get('/',(req,res)=>{
@@ -45,4 +46,6 @@ app.get('/about',(req,res)=>{
 })
 
 
-app.listen(3000);
+app.listen(port,()=>{
+    'server is up on port' +port;
+});
